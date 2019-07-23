@@ -11,6 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'SiteController@index')->name('home');
+Route::get('/sign-in', 'SiteController@index')->name('sign');
