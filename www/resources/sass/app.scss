@@ -1,9 +1,7 @@
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
-
 // Variables
 @import "variables";
-
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
@@ -18,34 +16,42 @@ nav.navbar-findcond {
     background: #fff;
     border-color: $border_color_1;
     box-shadow: 0 0 2px 0 #ccc;
+
     a {
         color: $color_1;
     }
+
     ul.navbar-nav {
         a {
             color: $color_1;
             border-style: solid;
             border-width: 0 0 2px 0;
             border-color: $border_color_2;
+
             &:hover {
                 background: #fff;
                 border-color: $border_color_3;
             }
+
             &:visited {
                 background: #fff;
             }
+
             &:focus {
                 background: #fff;
             }
+
             &:active {
                 background: #fff;
             }
         }
     }
+
     ul.dropdown-menu {
-        >li {
-            >a {
+        > li {
+            > a {
                 color: $color_2;
+
                 &:hover {
                     background: #f14444;
                     color: $color_3;
@@ -54,6 +60,27 @@ nav.navbar-findcond {
         }
     }
 }
+
+.mx-datepicker {
+    width: 100% !important
+}
+
+.mx-input {
+    display: block !important;
+    width: 100% !important;
+    height: 36px !important;
+    padding: 6px 12px !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    color: #555555 !important;
+    background-color: #fff !important;
+    background-image: none !important;
+    border: 1px solid #ccd0d2 !important;
+    border-radius: 4px !important;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075) !important;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s !important;
+}
+
 button[type="submit"] {
     border-radius: 2px;
     color: $color_3;
@@ -68,6 +95,7 @@ button[type="submit"] {
     cursor: pointer;
     width: 10%;
     transition: background .5s;
+
     &:hover {
         background: #2f3c4e;
     }

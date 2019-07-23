@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Airport Search | Homework</title>
+    <title>Flights search | Homework</title>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -29,7 +29,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <search-form></search-form>
+                <search></search>
             </div>
         </div>
     </div>

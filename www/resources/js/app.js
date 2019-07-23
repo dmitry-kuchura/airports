@@ -1,13 +1,21 @@
-// import vuejs_paginate from "vuejs-paginate";
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes React and other helpers. It's a great starting point while
+ * building robust, powerful web applications using React + Laravel.
+ */
+
+require('./bootstrap');
+
 import Vue from "vue";
-import axios from "axios";
 
-window.axios = axios;
+import DatePicker from 'vue2-datepicker'
+import Select2 from 'v-select2-component';
 
-Vue.component('search-form', require('./components/SearchFormComponent.vue').default);
-// Vue.component('search-result', require('./components/SearchResultComponent.vue'));
-// Vue.component('paginate', vuejs_paginate);
+Vue.component('search', require('./components/SearchComponent.vue').default);
 
-const app = new Vue({
-    el: '#app'
+Vue.component('date-picker', DatePicker);
+Vue.component('vue-select', Select2);
+
+new Vue({
+    el: '#app',
 });
