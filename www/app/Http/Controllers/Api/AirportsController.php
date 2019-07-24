@@ -1,26 +1,33 @@
 <?php
 
-
 namespace App\Http\Controllers\Api;
 
+use App\Repositories\AirportsRepository;
 
 class AirportsController
 {
+    protected $repository;
+
+    public function __construct(AirportsRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     public function list()
     {
-        return response()->json([
-            [
-                "id" => "IEV",
-                "text" => "Zhulyany Airport",
-                "city" => "Kiev",
-                "country" => "Ukraine"
-            ],
-            [
-                "id" => "KBP",
-                "text" => "Borispol Airport",
-                "city" => "Kiev",
-                "country" => "Ukraine",
-            ]
-        ], 200, [], JSON_NUMERIC_CHECK);
+        $query = $this->repository->list();
+
+        $result = [];
+
+        foreach ($query as $obj) {
+            $result[] = [
+                "id" => $obj->key,
+                "text" => $obj->name,
+                "city" => $obj->city,
+                "country" => $obj->country
+            ];
+        }
+
+        return response()->json($result, 200, [], JSON_NUMERIC_CHECK);
     }
 }

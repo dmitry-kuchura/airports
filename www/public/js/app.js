@@ -1795,6 +1795,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1813,7 +1816,12 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('api/v1/airports/list').then(function (_ref) {
+    axios.get('api/v1/airports/list', {
+      auth: {
+        username: 'admin',
+        password: 'secret'
+      }
+    }).then(function (_ref) {
       var data = _ref.data;
       return _this.airports = data;
     })["catch"](function (response) {
@@ -1825,7 +1833,12 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.saved = false;
-      axios.post('api/v1/search', this.searchQuery).then(function (_ref2) {
+      axios.post('api/v1/search', this.searchQuery, {
+        auth: {
+          username: 'admin',
+          password: 'secret'
+        }
+      }).then(function (_ref2) {
         var data = _ref2.data;
         return _this2.setSuccessMessage(data);
       })["catch"](function (_ref3) {
@@ -43862,7 +43875,7 @@ var render = function() {
                     [
                       _c("div", { staticClass: "card card-body" }, [
                         _vm._v(
-                          "\n                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.\n                    "
+                          "\n                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad\n                        squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente\n                        ea proident.\n                    "
                         )
                       ])
                     ]
@@ -56106,6 +56119,10 @@ try {
 
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+axios.defaults.auth = {
+  username: 'admin',
+  password: 'secret'
+};
 
 /***/ }),
 

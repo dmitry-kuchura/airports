@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class AirportsTableSeeder extends Seeder
+class TransporterTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,7 @@ class AirportsTableSeeder extends Seeder
     public function run()
     {
         foreach ($this->data() as $value) {
-            DB::table('airports')->insert($value);
+            DB::table('transporters')->insert($value);
         }
     }
 
@@ -22,52 +22,43 @@ class AirportsTableSeeder extends Seeder
     {
         return [
             [
-                'key' => 'IEV',
-                'name' => 'Kyiv - Zhulyany',
-                'city' => 'Kyiv',
-                'country' => 'Ukraine',
+                'code' => 'FR',
+                'name' => 'Ryanair',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ], [
-                'key' => 'KBP',
-                'name' => 'Kyiv - Borispol',
-                'city' => 'Kyiv',
-                'country' => 'Ukraine',
+                'code' => 'U2',
+                'name' => 'EasyJet',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ], [
-                'key' => 'VIE',
-                'name' => 'Vienna',
-                'city' => 'Vienna',
-                'country' => 'Austria',
+                'code' => 'LH',
+                'name' => 'Lufthansa',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ], [
-                'key' => 'LCA',
-                'name' => 'Larnaca',
-                'city' => 'Larnaca',
-                'country' => 'Cyprus',
+                'code' => 'OE',
+                'name' => 'Laudamotion',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ], [
-                'key' => 'CPH',
-                'name' => 'Copenhagen',
-                'city' => 'Copenhagen',
-                'country' => 'Denmark',
+                'code' => 'W6',
+                'name' => 'Wizz Air',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ], [
-                'key' => 'CGN',
-                'name' => 'Cologne',
-                'city' => 'Cologne',
-                'country' => 'Germany',
+                'code' => 'PS',
+                'name' => 'Ukraine International Airlines',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ], [
-                'key' => 'LEJ',
-                'name' => 'Leipzig',
-                'city' => 'Leipzig',
-                'country' => 'Germany',
+                'code' => 'TK',
+                'name' => 'Turkish Airlines',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            ], [
+                'code' => 'BT',
+                'name' => 'Air Baltic',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ],

@@ -15,14 +15,16 @@ class CreateFlightsTable extends Migration
     public function up()
     {
         Schema::create('flights', function (Blueprint $table) {
-            $table->bigIncrements('id')->primary('flights_pkey');
+            $table->bigIncrements('id');
 
             $table->string('flight_number');
             $table->integer('transporter_id');
             $table->integer('departure_airport_id');
             $table->integer('arrival_airport_id');
-            $table->date('departure_at');
-            $table->date('arrival_at');
+            $table->timestamp('departure_at');
+            $table->timestamp('arrival_at');
+
+            $table->index(['departure_airport_id', 'arrival_airport_id']);
 
             $table->timestamps();
         });

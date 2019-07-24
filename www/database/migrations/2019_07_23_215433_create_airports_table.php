@@ -15,12 +15,14 @@ class CreateAirportsTable extends Migration
     public function up()
     {
         Schema::create('airports', function (Blueprint $table) {
-            $table->bigIncrements('id')->primary('airports_pkey');
+            $table->bigIncrements('id');
 
-            $table->string('label')->nullable();
+            $table->string('key', 3)->nullable();
             $table->string('name')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
+
+            $table->index(['key']);
 
             $table->timestamps();
         });

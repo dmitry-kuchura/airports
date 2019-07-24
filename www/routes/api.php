@@ -11,12 +11,12 @@
 |
 */
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-Route::prefix('v1')->group(function () {
-    Route::post('search', 'Api\SearchController@search')->name('api.search');
+Route::middleware('authentication')->group(function () {
+    Route::prefix('v1')->group(function () {
+        Route::post('search', 'Api\SearchController@search')->name('api.search');
 
-    Route::prefix('airports')->group(function () {
-        Route::get('list', 'Api\AirportsController@list')->name('airports.list');
+        Route::prefix('airports')->group(function () {
+            Route::get('list', 'Api\AirportsController@list')->name('api.airports.list');
+        });
     });
 });
-//});
