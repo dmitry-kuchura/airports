@@ -24,6 +24,7 @@
         "bootstrap": "^4.1.0",
         "bootstrap-sass": "^3.3.7",
         "jquery": "^3.2",
+        "moment": "^2.24.0",
         "select2": "^4.0.8",
         "v-select2-component": "^0.3.8",
         "vue": "^2.5.17",

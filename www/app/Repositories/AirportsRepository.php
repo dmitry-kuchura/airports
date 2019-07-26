@@ -13,16 +13,6 @@ class AirportsRepository implements Repository
         return $this->model::all();
     }
 
-    public function store($data)
-    {
-        // TODO: Implement store() method.
-    }
-
-    public function update($data)
-    {
-        // TODO: Implement update() method.
-    }
-
     public function get($id)
     {
         // TODO: Implement get() method.

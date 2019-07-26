@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SearchRequest;
 use App\Repositories\SearchRepository;
-use Carbon\Carbon;
 
 class SearchController extends Controller
 {
@@ -18,7 +18,7 @@ class SearchController extends Controller
 
     public function search(SearchRequest $request)
     {
-        $result = $this->repository->search($request->all());
+        $result = $this->repository->search($request->get('searchQuery'));
 
         $search = [];
 
@@ -39,9 +39,9 @@ class SearchController extends Controller
 
         return response()->json([
             "searchQuery" => [
-                "departureAirport" => "IEV",
-                "arrivalAirport" => "BUD",
-                "departureDate" => "2018-07-01"
+                "departureAirport" => $request->input("searchQuery.departureAirport"),
+                "arrivalAirport" => $request->input("searchQuery.arrivalAirport"),
+                "departureDate" => $request->input("searchQuery.departureDate"),
             ],
             "searchResults" => $search
         ], 200, [], JSON_NUMERIC_CHECK);

@@ -13,20 +13,36 @@ class FlightsTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i < 150; $i++) {
+        for ($i = 0; $i < 1500; $i++) {
 
-            $date = Carbon::now()->addDays(rand(5, 25));
+            $date = Carbon::now()->addDays(rand(1, 10));
+
+            $departure = rand(15, 21);
+            $arrival = $this->randomAirportWithoutRepeat($departure);
 
             DB::table('flights')->insert([
                 'flight_number' => rand(112, 882),
                 'transporter_id' => rand(1, 8),
-                'departure_airport_id' => rand(15, 21),
-                'arrival_airport_id' => rand(15, 21),
+                'departure_airport_id' => $departure,
+                'arrival_airport_id' => $arrival,
                 'departure_at' => $date->format('Y-m-d H:i:s'),
                 'arrival_at' => $date->addMinutes(rand(59, 240))->format('Y-m-d H:i:s'),
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
         }
+    }
+
+    function randomAirportWithoutRepeat($value)
+    {
+        $airports = [15, 16, 17, 18, 19, 20, 21];
+
+        if (($key = array_search($value, $airports)) !== false) {
+            unset($airports[$key]);
+        }
+
+        $random = array_rand($airports);
+
+        return $airports[$random];
     }
 }

@@ -17,13 +17,6 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="{{ route('home') }}">Flights search</a>
             </div>
-            <div class="collapse navbar-collapse" id="navbar">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="active">
-                        <a href="{{ route('sign') }}">Sign-in for search</a>
-                    </li>
-                </ul>
-            </div>
         </div>
     </nav>
     <div class="container">

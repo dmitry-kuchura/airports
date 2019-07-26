@@ -26,9 +26,18 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'departureAirport' => 'required|string',
-            'arrivalAirport' => 'required|string',
-            'departureDate' => 'required|string',
+            'searchQuery.departureAirport' => 'required|string',
+            'searchQuery.arrivalAirport' => 'required|string|different:searchQuery.departureAirport',
+            'searchQuery.departureDate' => 'required|date|date_format:Y-m-d|after:yesterday',
+        ];
+    }
+
+    public function  attributes()
+    {
+        return [
+            'searchQuery.departureAirport' => 'Departure Airport',
+            'searchQuery.arrivalAirport' => 'Arrival Airport',
+            'searchQuery.departureDate' => 'Departure Date'
         ];
     }
 

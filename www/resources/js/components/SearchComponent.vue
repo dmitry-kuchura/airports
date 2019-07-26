@@ -7,36 +7,36 @@
 
                     <div class="form-group">
                         <label class="col-md-3 control-label">Departure</label>
-                        <div class="col-md-9" :class="{'has-error': errors.departureAirport}">
+                        <div class="col-md-9" :class="{'has-error': errors['searchQuery.departureAirport']}">
 
                             <vue-select v-model="searchQuery.departureAirport"
                                         :options="airports"
-                                        :settings="{ placeholder: 'Specifies the placeholder through settings' }"/>
+                                        :settings="{ placeholder: 'Please, select Departure Airport' }"/>
 
-                            <span v-if="errors.departureAirport"
-                                  class="help-block text-danger">{{ errors.departureAirport[0] }}</span>
+                            <span v-if="errors['searchQuery.departureAirport']" class="help-block text-danger">{{ errors['searchQuery.departureAirport'][0] }}</span>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-3 control-label">Arrival</label>
-                        <div class="col-md-9" :class="{'has-error': errors.arrival}">
+                        <div class="col-md-9" :class="{'has-error': errors['searchQuery.arrivalAirport']}">
 
                             <vue-select v-model="searchQuery.arrivalAirport"
                                         :options="airports"
-                                        :settings="{ placeholder: 'Specifies the placeholder through settings' }"/>
+                                        :settings="{ placeholder: 'Please, select Arrival Airport' }"/>
 
-                            <span v-if="errors.arrivalAirport" class="help-block text-danger">{{ errors.arrivalAirport[0] }}</span>
+                            <span v-if="errors['searchQuery.arrivalAirport']" class="help-block text-danger">{{ errors['searchQuery.arrivalAirport'][0] }}</span>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-3 control-label">Select Date</label>
-                        <div class="col-md-9" :class="{'has-error': errors.departureDate}">
+                        <div class="col-md-9" :class="{'has-error': errors['searchQuery.departureDate']}">
 
-                            <date-picker v-model="searchQuery.departureDate" valueType="format" lang="en"></date-picker>
+                            <date-picker v-model="searchQuery.departureDate" valueType="format" lang="en"
+                                         :not-before="new Date()"></date-picker>
 
-                            <span v-if="errors.departureDate" class="help-block text-danger">{{ errors.departureDate[0] }}</span>
+                            <span v-if="errors['searchQuery.departureDate']" class="help-block text-danger">{{ errors['searchQuery.departureDate'][0] }}</span>
                         </div>
                     </div>
 
@@ -53,24 +53,31 @@
             <fieldset>
                 <legend class="text-center">Results:</legend>
 
-                <div class="jumbotron" v-for="result in searchResults">
-                    <h3 class="display-4">{{ result.flightNumber }}</h3>
-                    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra
-                        attention to featured content or information.</p>
-                    <hr class="my-4">
-                    <a class="btn btn-primary" data-toggle="collapse" :href="result.flightNumber" role="button"
-                       aria-expanded="false" :aria-controls="result.flightNumber">
-                        More information
-                    </a>
-                    <div class="collapse" :id="result.flightNumber">
-                        <div class="card card-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-                            squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente
-                            ea proident.
-                        </div>
-                    </div>
+                <div class="alert alert-warning" v-if="emptyResults">
+                    <strong>Sorry!</strong> No flight on this day! Please, choose another date departure.
                 </div>
 
+                <div class="jumbotron jumbotron-fluid" v-if="!emptyResults" v-for="result in searchResults">
+                    <div class="container">
+                        <h3 class="display-4">✈ Flight Number: {{ result.flightNumber }}</h3>
+                        <p class="lead">Transporter: {{ result.transporter.name + " " + result.transporter.code }}</p>
+                        <p class="lead">Travel time: {{ Math.floor(result.duration / 60) + " hours " + result.duration % 60  + " minutes" }} </p>
+
+                        <hr class="my-4">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="display-4">✈ Departure Airport: {{ result.departureAirport }}</h4>
+                                <p class="lead">Departure time: {{ result.departureDateTime }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="display-4">✈ Arrival Airport: {{ result.arrivalAirport }}</h4>
+                                <p class="lead">Arrival time: {{ result.arrivalDateTime }}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </fieldset>
         </div>
 
@@ -83,8 +90,9 @@
         data() {
             return {
                 airports: [],
-                isSending: false,
+                loader: true,
                 isFetched: false,
+                emptyResults: true,
                 searchResults: [],
                 searchQuery: {
                     departureAirport: null,
@@ -96,13 +104,8 @@
         },
 
         mounted() {
-            axios.get('api/v1/airports/list', {
-                auth: {
-                    username: 'admin',
-                    password: 'secret'
-                },
-            })
-                .then(({data}) => this.airports = data)
+            axios.get('api/v1/airports/list')
+                .then(({data}) => this.airports = data, this.loader = false)
                 .catch(function (response) {
                     console.log(response);
                 });
@@ -112,7 +115,7 @@
             onSubmit() {
                 this.saved = false;
 
-                axios.post('api/v1/search', this.searchQuery, {
+                axios.post('api/v1/search', {"searchQuery": this.searchQuery}, {
                     auth: {
                         username: 'admin',
                         password: 'secret'
@@ -129,12 +132,7 @@
             setSuccessMessage(data) {
                 this.searchResults = data.searchResults;
                 this.isFetched = true;
-            },
-
-            reset() {
-                this.errors = [];
-                this.isFetched = false;
-                this.searchQuery = {departureAirport: null, arrivalAirport: null, departureDate: null};
+                this.emptyResults = !data.searchResults.length;
             }
         }
     }

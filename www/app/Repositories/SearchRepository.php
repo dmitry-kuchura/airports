@@ -2,13 +2,14 @@
 
 namespace App\Repositories;
 
-use App\Models\Flights;
 use Carbon\Carbon;
+use App\Models\Flights;
 
 class SearchRepository implements Repository
 {
     public function search($data)
     {
+        // Что бы найти полеты в течении одного дня нужно добавить ко
         $from = Carbon::parse($data['departureDate'])->startOfDay()->format('Y-m-d H:i:s');
         $to = Carbon::parse($data['departureDate'])->endOfDay()->format('Y-m-d H:i:s');
 
@@ -34,25 +35,5 @@ class SearchRepository implements Repository
     public function list()
     {
         // TODO: Implement list() method.
-    }
-
-    public function store($data)
-    {
-        // TODO: Implement store() method.
-    }
-
-    public function update($data)
-    {
-        // TODO: Implement update() method.
-    }
-
-    public function get($id)
-    {
-        // TODO: Implement get() method.
-    }
-
-    public function destroy($id)
-    {
-        // TODO: Implement destroy() method.
     }
 }
