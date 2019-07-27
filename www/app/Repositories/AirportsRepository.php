@@ -13,13 +13,8 @@ class AirportsRepository implements Repository
         return $this->model::all();
     }
 
-    public function get($id)
+    public function search(array $date)
     {
-        // TODO: Implement get() method.
-    }
-
-    public function destroy($id)
-    {
-        // TODO: Implement destroy() method.
+        // TODO: Implement search() method.
     }
 }

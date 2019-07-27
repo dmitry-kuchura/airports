@@ -13,11 +13,11 @@ class FlightsTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i < 1500; $i++) {
+        for ($i = 0; $i < 4500; $i++) {
 
             $date = Carbon::now()->addDays(rand(1, 10));
 
-            $departure = rand(15, 21);
+            $departure = rand(1, 13);
             $arrival = $this->randomAirportWithoutRepeat($departure);
 
             DB::table('flights')->insert([
@@ -35,7 +35,7 @@ class FlightsTableSeeder extends Seeder
 
     function randomAirportWithoutRepeat($value)
     {
-        $airports = [15, 16, 17, 18, 19, 20, 21];
+        $airports = range(1, 13);
 
         if (($key = array_search($value, $airports)) !== false) {
             unset($airports[$key]);

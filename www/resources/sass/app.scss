@@ -4,6 +4,10 @@
 @import "variables";
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
+// Loader
+@import '~vue-loaders/dist/vue-loaders.css';
+// Toastr alerts
+@import '~toastr/toastr';
 
 $color_1: #f14444;
 $color_2: #444;

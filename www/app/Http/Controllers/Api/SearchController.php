@@ -18,7 +18,7 @@ class SearchController extends Controller
 
     public function search(SearchRequest $request)
     {
-        $result = $this->repository->search($request->get('searchQuery'));
+        $result = $this->repository->search($request->get("searchQuery"));
 
         $search = [];
 
@@ -31,19 +31,19 @@ class SearchController extends Controller
                 "flightNumber" => $obj->transporters_code . $obj->flight_number,
                 "departureAirport" => $obj->departure_name,
                 "arrivalAirport" => $obj->arrival_name,
-                "departureDateTime" => Carbon::parse($obj->departure_at)->format('Y-m-d H:i'),
-                "arrivalDateTime" => Carbon::parse($obj->arrival_at)->format('Y-m-d H:i'),
+                "departureDateTime" => Carbon::parse($obj->departure_at)->format("Y-m-d H:i"),
+                "arrivalDateTime" => Carbon::parse($obj->arrival_at)->format("Y-m-d H:i"),
                 "duration" => Carbon::parse($obj->departure_at)->diffInMinutes(Carbon::parse($obj->arrival_at))
             ];
         }
 
-        return response()->json([
+        return $this->returnResponse([
             "searchQuery" => [
                 "departureAirport" => $request->input("searchQuery.departureAirport"),
                 "arrivalAirport" => $request->input("searchQuery.arrivalAirport"),
                 "departureDate" => $request->input("searchQuery.departureDate"),
             ],
             "searchResults" => $search
-        ], 200, [], JSON_NUMERIC_CHECK);
+        ], $this->success);
     }
 }

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\AirportsException;
+use App\Http\Controllers\Controller;
 use App\Repositories\AirportsRepository;
+use Exception;
 
-class AirportsController
+class AirportsController extends Controller
 {
     protected $repository;
 
@@ -15,19 +18,19 @@ class AirportsController
 
     public function list()
     {
-        $query = $this->repository->list();
-
         $result = [];
+
+        $query = $this->repository->list();
 
         foreach ($query as $obj) {
             $result[] = [
                 "id" => $obj->key,
-                "text" => $obj->name,
+                "text" => $obj->name . " (" . $obj->city . ", " . $obj->country . ")",
                 "city" => $obj->city,
                 "country" => $obj->country
             ];
         }
 
-        return response()->json($result, 200, [], JSON_NUMERIC_CHECK);
+        return $this->returnResponse($result, $this->success);
     }
 }

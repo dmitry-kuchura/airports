@@ -3,17 +3,18 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Response;
+use Illuminate\Auth\AuthenticationException;
 
 class Authentication
 {
 
     /**
-     * Handle an incoming request.
+     * Handle an incoming request
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
+     * @param $request
+     * @param Closure $next
      * @return mixed
+     * @throws AuthenticationException
      */
     public function handle($request, Closure $next)
     {
@@ -21,9 +22,7 @@ class Authentication
         $token = trim($header[1]);
 
         if (base64_encode(config('auth.username') . ":" . config('auth.password')) !== $token) {
-            return response()->json([
-                "message" => "Unauthorised",
-            ], Response::HTTP_UNAUTHORIZED, ["WWW-Authenticate" => "Basic"], JSON_NUMERIC_CHECK);
+            throw new AuthenticationException("Unauthorised");
         }
 
         return $next($request);

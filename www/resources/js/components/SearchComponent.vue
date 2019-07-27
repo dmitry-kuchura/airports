@@ -1,5 +1,7 @@
 <template>
     <div>
+        <loader v-if="isLoading"></loader>
+
         <div class="well well-sm">
             <form class="form-horizontal" @submit.prevent="onSubmit">
                 <fieldset>
@@ -61,7 +63,7 @@
                     <div class="container">
                         <h3 class="display-4">✈ Flight Number: {{ result.flightNumber }}</h3>
                         <p class="lead">Transporter: {{ result.transporter.name + " " + result.transporter.code }}</p>
-                        <p class="lead">Travel time: {{ Math.floor(result.duration / 60) + " hours " + result.duration % 60  + " minutes" }} </p>
+                        <p class="lead">Travel time: {{ Math.floor(result.duration / 60) + " hours " + result.duration % 60 + " minutes" }} </p>
 
                         <hr class="my-4">
 
@@ -90,7 +92,7 @@
         data() {
             return {
                 airports: [],
-                loader: true,
+                isLoading: true,
                 isFetched: false,
                 emptyResults: true,
                 searchResults: [],
@@ -104,35 +106,40 @@
         },
 
         mounted() {
-            axios.get('api/v1/airports/list')
-                .then(({data}) => this.airports = data, this.loader = false)
-                .catch(function (response) {
-                    console.log(response);
-                });
+            axios.get("api/v1/airports/list")
+                .then(({data}) => this.setAirportsSuccessResponse(data))
+                .catch((response) => this.setAirportsErrorResponse(response));
         },
 
         methods: {
             onSubmit() {
-                this.saved = false;
+                this.isLoading = true;
 
-                axios.post('api/v1/search', {"searchQuery": this.searchQuery}, {
-                    auth: {
-                        username: 'admin',
-                        password: 'secret'
-                    },
-                })
-                    .then(({data}) => this.setSuccessMessage(data))
-                    .catch(({response}) => this.setErrors(response));
+                axios.post("api/v1/search", {"searchQuery": this.searchQuery})
+                    .then(({data}) => this.setSuccessResponse(data))
+                    .catch(({response}) => this.setErrorResponse(response));
             },
 
-            setErrors(response) {
-                this.errors = response.data.errors;
-            },
-
-            setSuccessMessage(data) {
+            setSuccessResponse(data) {
                 this.searchResults = data.searchResults;
-                this.isFetched = true;
                 this.emptyResults = !data.searchResults.length;
+                this.isFetched = true;
+                this.isLoading = false;
+            },
+
+            setErrorResponse(response) {
+                this.errors = response.data.errors;
+                this.isLoading = false;
+            },
+
+            setAirportsSuccessResponse(data) {
+                this.airports = data;
+                this.isLoading = false;
+            },
+
+            setAirportsErrorResponse(response) {
+                this.isLoading = false;
+                toastr.error("Error, maybe you forget Migrate and Seeding database?!?", "Inconceivable!")
             }
         }
     }
