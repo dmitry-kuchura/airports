@@ -13,9 +13,9 @@ class FlightsTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i < 4500; $i++) {
+        for ($i = 0; $i < 7000; $i++) {
 
-            $date = Carbon::now()->addDays(rand(1, 10));
+            $date = Carbon::now()->addDays(rand(1, 5));
 
             $departure = rand(1, 13);
             $arrival = $this->randomAirportWithoutRepeat($departure);
@@ -26,7 +26,7 @@ class FlightsTableSeeder extends Seeder
                 'departure_airport_id' => $departure,
                 'arrival_airport_id' => $arrival,
                 'departure_at' => $date->format('Y-m-d H:i:s'),
-                'arrival_at' => $date->addMinutes(rand(59, 240))->format('Y-m-d H:i:s'),
+                'arrival_at' => $date->addMinutes(rand(59, 360))->format('Y-m-d H:i:s'),
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);

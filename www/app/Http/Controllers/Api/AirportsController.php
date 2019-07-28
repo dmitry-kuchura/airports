@@ -17,10 +17,14 @@ class AirportsController extends Controller
 
     public function list()
     {
+        // В случае если результат будет отсутсвовать после запроса вернется пустой массив
         $result = [];
 
+        // В случае если запрос будет содержать ошибку либо будет отсутсвовать таблица
+        // наш Exception будет обработан в главном Exception handle файле app\Exceptions\Handler.php
         $query = $this->repository->list();
 
+        // формируем ответ для возврата
         foreach ($query as $obj) {
             $result[] = [
                 "id" => $obj->key,

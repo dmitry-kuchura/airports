@@ -21,6 +21,7 @@ class CreateAirportsTable extends Migration
             $table->string('name')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
+            $table->string('timezone')->nullable();
 
             $table->index(['key']);
 
