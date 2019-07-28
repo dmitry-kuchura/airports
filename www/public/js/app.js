@@ -1858,6 +1858,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     setErrorResponse: function setErrorResponse(response) {
       this.isLoading = false;
+      this.emptyResults = true;
+      this.isFetched = false;
       this.errors = response.data.errors;
       toastr.error("The given data was invalid.", "Error!");
     },
