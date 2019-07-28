@@ -63,7 +63,8 @@
                     <div class="container">
                         <h3 class="display-4">✈ Flight Number: {{ result.flightNumber }}</h3>
                         <p class="lead">Transporter: {{ result.transporter.name + " " + result.transporter.code }}</p>
-                        <p class="lead">Travel time: {{ Math.floor(result.duration / 60) + " hours " + result.duration % 60 + " minutes" }} </p>
+                        <p class="lead">Travel time: {{ Math.floor(result.duration / 60) + " hours " + result.duration %
+                            60 + " minutes" }} </p>
 
                         <hr class="my-4">
 
@@ -121,20 +122,22 @@
             },
 
             setSuccessResponse(data) {
+                this.isLoading = false;
                 this.searchResults = data.searchResults;
                 this.emptyResults = !data.searchResults.length;
+                this.errors = [];
                 this.isFetched = true;
-                this.isLoading = false;
             },
 
             setErrorResponse(response) {
-                this.errors = response.data.errors;
                 this.isLoading = false;
+                this.errors = response.data.errors;
+                toastr.error("The given data was invalid.", "Error!");
             },
 
             setAirportsSuccessResponse(data) {
-                this.airports = data;
                 this.isLoading = false;
+                this.airports = data;
             },
 
             setAirportsErrorResponse(response) {

@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Exceptions\AirportsException;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Repositories\AirportsRepository;
-use Exception;
 
 class AirportsController extends Controller
 {
@@ -31,6 +30,6 @@ class AirportsController extends Controller
             ];
         }
 
-        return $this->returnResponse($result, $this->success);
+        return $this->returnResponse($result, Response::HTTP_OK);
     }
 }

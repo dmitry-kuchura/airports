@@ -12,8 +12,8 @@ return [
     |
     */
 
-    'username' => env('USERNAME', 'admin'),
-    'password' => env('PASSWORD', 'secret'),
+    'username' => env('AUTH_USERNAME', 'admin'),
+    'password' => env('AUTH_PASSWORD', 'secret'),
 
     /*
     |--------------------------------------------------------------------------

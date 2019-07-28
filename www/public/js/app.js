@@ -1807,6 +1807,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1849,18 +1850,20 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     setSuccessResponse: function setSuccessResponse(data) {
+      this.isLoading = false;
       this.searchResults = data.searchResults;
       this.emptyResults = !data.searchResults.length;
+      this.errors = [];
       this.isFetched = true;
-      this.isLoading = false;
     },
     setErrorResponse: function setErrorResponse(response) {
-      this.errors = response.data.errors;
       this.isLoading = false;
+      this.errors = response.data.errors;
+      toastr.error("The given data was invalid.", "Error!");
     },
     setAirportsSuccessResponse: function setAirportsSuccessResponse(data) {
-      this.airports = data;
       this.isLoading = false;
+      this.airports = data;
     },
     setAirportsErrorResponse: function setAirportsErrorResponse(response) {
       this.isLoading = false;

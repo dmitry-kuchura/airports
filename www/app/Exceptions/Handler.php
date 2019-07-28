@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -41,18 +42,13 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param \Illuminate\Http\Request $request
+     * @param \Exception $exception
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $exception)
     {
-        // add Accept: application/json in request
-        if ($request->wantsJson()) {
-            return $this->handleApiException($request, $exception);
-        } else {
-            return parent::render($request, $exception);
-        }
+        return $this->handleApiException($request, $exception);
     }
 
     /**
@@ -63,7 +59,7 @@ class Handler extends ExceptionHandler
      */
     private function apiResponse($exception)
     {
-        if (method_exists($exception, 'getStatusCode')) {
+        if (method_exists($exception, "getStatusCode")) {
             $statusCode = $exception->getStatusCode();
         } else {
             $statusCode = 500;
@@ -73,32 +69,32 @@ class Handler extends ExceptionHandler
 
         switch ($statusCode) {
             case 401:
-                $response['message'] = 'Unauthorized';
+                $response["message"] = "Unauthorized";
                 break;
             case 403:
-                $response['message'] = 'Forbidden';
+                $response["message"] = "Forbidden";
                 break;
             case 404:
-                $response['message'] = 'Not Found';
+                $response["message"] = "Not Found";
                 break;
             case 405:
-                $response['message'] = 'Method Not Allowed';
+                $response["message"] = "Method Not Allowed";
                 break;
             case 422:
-                $response['message'] = $exception->original['message'];
-                $response['errors'] = $exception->original['errors'];
+                $response["message"] = $exception->original["message"];
+                $response["errors"] = $exception->original["errors"];
                 break;
             default:
-                $response['message'] = ($statusCode == 500) ? 'Whoops, looks like something went wrong' : $exception->getMessage();
+                $response["message"] = ($statusCode == 500) ? "Whoops, looks like something went wrong" : $exception->getMessage();
                 break;
         }
 
-        if (config('app.debug')) {
-            $response['trace'] = $exception->getTrace();
-            $response['code'] = $exception->getCode();
+        if (config("app.debug")) {
+            $response["trace"] = $exception->getTrace();
+            $response["code"] = $exception->getCode();
         }
 
-        $response['status'] = $statusCode;
+        $response["status"] = $statusCode;
 
         return response()->json($response, $statusCode);
     }
@@ -118,13 +114,7 @@ class Handler extends ExceptionHandler
             $exception = $exception->getResponse();
         }
 
-        if ($exception instanceof \Illuminate\Auth\AuthenticationException) {
-            $exception = $this->unauthenticated($request, $exception);
-        }
-
-        if ($exception instanceof \Illuminate\Validation\ValidationException) {
-            $exception = $this->convertValidationExceptionToResponse($exception, $request);
-        }
+        Log::error($exception);
 
         return $this->apiResponse($exception);
     }

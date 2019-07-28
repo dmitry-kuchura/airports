@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Api;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SearchRequest;
-use App\Repositories\SearchRepository;
+use App\Repositories\FlightsRepository;
+use Illuminate\Http\Response;
 
-class SearchController extends Controller
+class FlightsController extends Controller
 {
     protected $repository;
 
-    public function __construct(SearchRepository $repository)
+    public function __construct(FlightsRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -44,6 +45,6 @@ class SearchController extends Controller
                 "departureDate" => $request->input("searchQuery.departureDate"),
             ],
             "searchResults" => $search
-        ], $this->success);
+        ], Response::HTTP_OK);
     }
 }

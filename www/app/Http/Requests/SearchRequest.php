@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Response;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class SearchRequest extends FormRequest
@@ -52,6 +53,6 @@ class SearchRequest extends FormRequest
             [
                 'message' => 'The given data was invalid.',
                 'errors' => $validator->errors()
-            ], 422));
+            ], Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 }

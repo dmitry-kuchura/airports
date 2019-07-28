@@ -5,9 +5,9 @@ namespace App\Repositories;
 use Carbon\Carbon;
 use App\Models\Flights;
 
-class SearchRepository implements Repository
+class FlightsRepository implements Repository
 {
-    public function search($data)
+    public function search(array $data)
     {
         // Что бы найти полеты в течении одного дня нужно определить конец дня и начало
         $from = Carbon::parse($data["departureDate"])->startOfDay()->format("Y-m-d H:i:s");
