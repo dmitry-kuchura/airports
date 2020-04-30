@@ -23,7 +23,7 @@
     "dependencies": {
         "bootstrap": "^4.1.0",
         "bootstrap-sass": "^3.3.7",
-        "jquery": "^3.2",
+        "jquery": "^3.5",
         "select2": "^4.0.8",
         "toastr": "^2.1.4",
         "v-select2-component": "^0.3.8",
